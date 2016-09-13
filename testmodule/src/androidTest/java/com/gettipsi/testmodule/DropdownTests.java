@@ -5,6 +5,7 @@ import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
+import android.view.WindowManager;
 
 import com.gettipsi.testmodule.action.SelectElementWithNameAction;
 import com.gettipsi.testmodule.action.SetSelectedAction;
@@ -44,6 +45,15 @@ public class DropdownTests {
 
     @Before
     public void initValidData() {
+        final MainActivity activity = activityRule.getActivity();
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            }
+        });
         items = Arrays.<Object>asList("One", "Two", "Three", "Four");
     }
 
