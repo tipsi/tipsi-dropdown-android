@@ -79,6 +79,7 @@ public class DropdownTests {
                 .check(matches(withSpinnerText(items.get(3).toString())));
 
         SystemClock.sleep(1000);
+        
     }
 
     @Test
