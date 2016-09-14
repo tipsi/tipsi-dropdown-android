@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.gettipsi.testmodule"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -24,6 +24,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile project(':app')
-    androidTestCompile 'com.android.support:support-annotations:24.2.0'
+    androidTestCompile 'com.android.support:support-annotations:+'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
 }
