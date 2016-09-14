@@ -8,8 +8,6 @@ android:
     - tools
     - platform-tools
     - build-tools-23.0.3
-    - android-22
-    - android-23
     - android-24
     - sys-img-armeabi-v7a-android-22
     - extra-android-m2repository
