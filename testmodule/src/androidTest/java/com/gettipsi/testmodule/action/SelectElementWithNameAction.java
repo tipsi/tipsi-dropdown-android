@@ -1,9 +1,11 @@
 package com.gettipsi.testmodule.action;
 
+import android.app.Activity;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.gettipsi.tpsdropdown.Dropdown;
 
@@ -29,6 +31,7 @@ public class SelectElementWithNameAction implements ViewAction {
 
     @Override
     public void perform(UiController uiController, View view) {
+        ((Activity)view.getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         ((Dropdown) view).selectElementWithName(name);
     }
 }
