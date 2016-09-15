@@ -130,22 +130,22 @@ public class DropdownTests {
     public void checkItemsClickSelection() {
         setupItems();
         String item = items.get(0).toString();
-        onView(withId(R.id.dropdownId)).perform(click());
+//        onView(withId(R.id.dropdownId)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is(item))).perform(click());
         onView(withId(R.id.dropdownId)).check(matches(withSpinnerText(containsString(item))));
 
         String item1 = items.get(1).toString();
-        onView(withId(R.id.dropdownId)).perform(click());
+//        onView(withId(R.id.dropdownId)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is(item1))).perform(click());
         onView(withId(R.id.dropdownId)).check(matches(withSpinnerText(containsString(item1))));
 
         String item2 = items.get(2).toString();
-        onView(withId(R.id.dropdownId)).perform(click());
+//        onView(withId(R.id.dropdownId)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is(item2))).perform(click());
         onView(withId(R.id.dropdownId)).check(matches(withSpinnerText(containsString(item2))));
 
         String item3 = items.get(3).toString();
-        onView(withId(R.id.dropdownId)).perform(click());
+//        onView(withId(R.id.dropdownId)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is(item3))).perform(click());
         onView(withId(R.id.dropdownId)).check(matches(withSpinnerText(containsString(item3))));
     }
