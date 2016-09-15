@@ -1,6 +1,5 @@
 package com.gettipsi.testmodule;
 
-import android.os.SystemClock;
 import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -64,23 +63,17 @@ public class DropdownTests {
                 .perform(new SetSelectedAction(0))
                 .check(matches(withSpinnerText(items.get(0).toString())));
 
-        SystemClock.sleep(1000);
         onView(withId(R.id.dropdownId))
                 .perform(new SetSelectedAction(1))
                 .check(matches(withSpinnerText(items.get(1).toString())));
 
-        SystemClock.sleep(1000);
         onView(withId(R.id.dropdownId))
                 .perform(new SetSelectedAction(2))
                 .check(matches(withSpinnerText(items.get(2).toString())));
 
-        SystemClock.sleep(1000);
         onView(withId(R.id.dropdownId))
                 .perform(new SetSelectedAction(3))
                 .check(matches(withSpinnerText(items.get(3).toString())));
-
-        SystemClock.sleep(1000);
-
     }
 
     @Test
@@ -90,22 +83,17 @@ public class DropdownTests {
                 .perform(new SelectElementWithNameAction(items.get(0).toString()))
                 .check(matches(withSpinnerText(items.get(0).toString())));
 
-//        SystemClock.sleep(1000);
         onView(withId(R.id.dropdownId))
                 .perform(new SelectElementWithNameAction(items.get(1).toString()))
                 .check(matches(withSpinnerText(items.get(1).toString())));
 
-//        SystemClock.sleep(1000);
         onView(withId(R.id.dropdownId))
                 .perform(new SelectElementWithNameAction(items.get(2).toString()))
                 .check(matches(withSpinnerText(items.get(2).toString())));
 
-//        SystemClock.sleep(1000);
         onView(withId(R.id.dropdownId))
                 .perform(new SelectElementWithNameAction(items.get(3).toString()))
                 .check(matches(withSpinnerText(items.get(3).toString())));
-
-//        SystemClock.sleep(1000);
     }
 
     @Test
