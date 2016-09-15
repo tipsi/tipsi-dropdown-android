@@ -8,6 +8,7 @@ import android.test.suitebuilder.annotation.LargeTest;
 import com.gettipsi.testmodule.action.SelectElementWithNameAction;
 import com.gettipsi.testmodule.action.SetSelectedAction;
 import com.gettipsi.testmodule.action.SetupElementsAction;
+import com.gettipsi.testmodule.action.UnlockKeyguardAction;
 import com.gettipsi.testmodule.matcher.DropdownMatcher;
 
 import org.junit.Before;
@@ -112,22 +113,30 @@ public class DropdownTests {
         String item = items.get(0).toString();
 //        onView(withId(R.id.dropdownId)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is(item))).perform(click());
-        onView(withId(R.id.dropdownId)).check(matches(withSpinnerText(containsString(item))));
+        onView(withId(R.id.dropdownId))
+                .perform(new UnlockKeyguardAction())
+                .check(matches(withSpinnerText(containsString(item))));
 
         String item1 = items.get(1).toString();
 //        onView(withId(R.id.dropdownId)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is(item1))).perform(click());
-        onView(withId(R.id.dropdownId)).check(matches(withSpinnerText(containsString(item1))));
+        onView(withId(R.id.dropdownId))
+                .perform(new UnlockKeyguardAction())
+                .check(matches(withSpinnerText(containsString(item1))));
 
         String item2 = items.get(2).toString();
 //        onView(withId(R.id.dropdownId)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is(item2))).perform(click());
-        onView(withId(R.id.dropdownId)).check(matches(withSpinnerText(containsString(item2))));
+        onView(withId(R.id.dropdownId))
+                .perform(new UnlockKeyguardAction())
+                .check(matches(withSpinnerText(containsString(item2))));
 
         String item3 = items.get(3).toString();
 //        onView(withId(R.id.dropdownId)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is(item3))).perform(click());
-        onView(withId(R.id.dropdownId)).check(matches(withSpinnerText(containsString(item3))));
+        onView(withId(R.id.dropdownId))
+                .perform(new UnlockKeyguardAction())
+                .check(matches(withSpinnerText(containsString(item3))));
     }
 
     private void setupItems() {
