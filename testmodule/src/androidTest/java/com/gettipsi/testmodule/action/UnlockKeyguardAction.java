@@ -8,16 +8,18 @@ import android.view.WindowManager;
 
 import org.hamcrest.Matcher;
 
+import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
+
 public class UnlockKeyguardAction implements ViewAction {
 
     @Override
     public Matcher<View> getConstraints() {
-        return null;
+        return isAssignableFrom(View.class);
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return "UnlockKeyguardAction";
     }
 
     @Override
