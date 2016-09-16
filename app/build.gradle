@@ -28,6 +28,12 @@ android {
     }
 }
 
+tasks.whenTaskAdded { task ->
+    if (task.name.equals("lint")) {
+        task.enabled = false
+    }
+}
+
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
