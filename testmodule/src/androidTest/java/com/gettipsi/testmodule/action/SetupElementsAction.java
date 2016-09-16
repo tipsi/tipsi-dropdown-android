@@ -35,7 +35,6 @@ public class SetupElementsAction implements ViewAction {
     @Override
     public void perform(UiController uiController, View view) {
         ((Activity)view.getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-        Dropdown dropdown = (Dropdown) view;
-        dropdown.setupWithElements(items);
+        ((Dropdown) view).setupWithElements(items);
     }
 }
