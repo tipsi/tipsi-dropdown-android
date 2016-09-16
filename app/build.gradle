@@ -20,6 +20,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        quiet true
+        checkReleaseBuilds false
+        // if true, stop the gradle build if errors are found
+        abortOnError false
+    }
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name.equals("lint")) {
+        task.enabled = false
+    }
 }
 
 task sourcesJar(type: Jar) {
