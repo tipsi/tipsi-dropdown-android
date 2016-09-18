@@ -1,15 +1,18 @@
 package com.gettipsi.testmodule.action;
 
+import android.app.Activity;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.gettipsi.tpsdropdown.Dropdown;
 
 import org.hamcrest.Matcher;
 
 import java.util.List;
+
+import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 
 public class SetupElementsAction implements ViewAction {
 
@@ -21,7 +24,7 @@ public class SetupElementsAction implements ViewAction {
 
     @Override
     public Matcher<View> getConstraints() {
-        return ViewMatchers.isAssignableFrom(Dropdown.class);
+        return isAssignableFrom(Dropdown.class);
     }
 
     @Override
@@ -31,7 +34,7 @@ public class SetupElementsAction implements ViewAction {
 
     @Override
     public void perform(UiController uiController, View view) {
-        Dropdown dropdown = (Dropdown) view;
-        dropdown.setupWithElements(items);
+        ((Activity)view.getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        ((Dropdown) view).setupWithElements(items);
     }
 }
