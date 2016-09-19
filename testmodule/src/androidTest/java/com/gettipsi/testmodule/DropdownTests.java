@@ -87,7 +87,6 @@ public class DropdownTests {
         onView(withId(R.id.dropdownId))
                 .perform(new SelectElementWithNameAction(items.get(3).toString()))
                 .check(matches(withSpinnerText(items.get(3).toString())));
-
     }
 
     private void setupItems() {
