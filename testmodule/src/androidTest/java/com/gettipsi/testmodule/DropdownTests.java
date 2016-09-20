@@ -1,13 +1,10 @@
 package com.gettipsi.testmodule;
 
-import android.app.KeyguardManager;
-import android.content.Context;
 import android.os.SystemClock;
 import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
-import android.view.WindowManager;
 
 import com.gettipsi.testmodule.action.SelectElementWithNameAction;
 import com.gettipsi.testmodule.action.SetSelectedAction;
@@ -47,22 +44,6 @@ public class DropdownTests {
 
     @Before
     public void initValidData() {
-        final MainActivity activity = activityRule.getActivity();
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                KeyguardManager mKG = (KeyguardManager) activity.getSystemService(Context.KEYGUARD_SERVICE);
-                KeyguardManager.KeyguardLock mLock = mKG.newKeyguardLock("keyguard");
-                mLock.disableKeyguard();
-
-                //turn the screen on
-                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-                        | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
-                        | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                        | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
-                        | WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON);
-            }
-        });
         items = Arrays.<Object>asList("One", "Two", "Three", "Four");
     }
 
