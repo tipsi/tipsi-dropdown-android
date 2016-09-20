@@ -44,8 +44,13 @@ public class DropdownTests {
     public void checkForCorrectViews() {
         onView(withId(R.id.dropdown))
                 .check(matches(withClassName(endsWith("DropdownContainer"))));
+
+        System.out.print("Test 3 0");
+
         onView(withId(R.id.dropdownId))
                 .check(matches(withClassName(endsWith("Dropdown"))));
+
+        System.out.print("Test 3 1");
     }
 
     @Test
@@ -56,17 +61,25 @@ public class DropdownTests {
                 .perform(new SetSelectedAction(0))
                 .check(matches(withSpinnerText(items.get(0).toString())));
 
+        System.out.print("Test 0 0");
+
         onView(withId(R.id.dropdownId))
                 .perform(new SetSelectedAction(1))
                 .check(matches(withSpinnerText(items.get(1).toString())));
+
+        System.out.print("Test 0 1");
 
         onView(withId(R.id.dropdownId))
                 .perform(new SetSelectedAction(2))
                 .check(matches(withSpinnerText(items.get(2).toString())));
 
+        System.out.print("Test 0 2");
+
         onView(withId(R.id.dropdownId))
                 .perform(new SetSelectedAction(3))
                 .check(matches(withSpinnerText(items.get(3).toString())));
+
+        System.out.print("Test 0 3");
     }
 
     @Test
@@ -76,17 +89,25 @@ public class DropdownTests {
                 .perform(new SelectElementWithNameAction(items.get(0).toString()))
                 .check(matches(withSpinnerText(items.get(0).toString())));
 
+        System.out.print("Test 1 0");
+
         onView(withId(R.id.dropdownId))
                 .perform(new SelectElementWithNameAction(items.get(1).toString()))
                 .check(matches(withSpinnerText(items.get(1).toString())));
+
+        System.out.print("Test 1 1");
 
         onView(withId(R.id.dropdownId))
                 .perform(new SelectElementWithNameAction(items.get(2).toString()))
                 .check(matches(withSpinnerText(items.get(2).toString())));
 
+        System.out.print("Test 1 2");
+
         onView(withId(R.id.dropdownId))
                 .perform(new SelectElementWithNameAction(items.get(3).toString()))
                 .check(matches(withSpinnerText(items.get(3).toString())));
+
+        System.out.print("Test 1 3");
     }
 
     private void setupItems() {
