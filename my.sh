@@ -12,6 +12,8 @@ export PATH=${PATH}:$HOME/sdk/android-sdk-linux/platform-tools:$HOME/sdk/android
 EOT
 source ~/.zshrc
 
+android update sdk --no-ui --all --filter tools,platform-tools,build-tools-24.0.2,android-24,sys-img-armeabi-v7a-android-24,extra-google-m2repository,extra-google-google_play_services,extra-android-support
+
 git clone --depth=50 https://github.com/tipsi/tipsi-dropdown-android.git tipsi/tipsi-dropdown-android
 jdk_switcher use oraclejdk8
 export TERM=dumb
