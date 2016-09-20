@@ -97,10 +97,10 @@ public class DropdownTests {
     }
 
 
-
     @Test
     public void checkItemsClickSelection() {
         setupItems();
+
         String item = items.get(0).toString();
         onView(withId(R.id.dropdownId))
                 .perform(click());
