@@ -2,6 +2,7 @@ package com.gettipsi.tpsdropdown;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatSpinner;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.SpinnerAdapter;
@@ -20,6 +21,18 @@ public class Dropdown extends AppCompatSpinner {
         super(context, 0);
         this.context = context;
         setOnItemSelectedListener(ON_ITEM_SELECTED_LISTENER);
+    }
+
+    public Dropdown(Context context, int mode) {
+        super(context, mode);
+    }
+
+    public Dropdown(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public Dropdown(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
     }
 
     public void setDropdownUpdateEvent(DropdownUpdateEvent dropdownUpdateEvent) {
