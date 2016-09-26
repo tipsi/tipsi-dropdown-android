@@ -9,9 +9,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class Adapter extends ArrayAdapter<Object> {
+public class Adapter<T> extends ArrayAdapter<T> {
 
-    public Adapter(Context context, int resource, List<Object> objects) {
+    public Adapter(Context context, int resource, List<T> objects) {
         super(context, resource, objects);
     }
 
