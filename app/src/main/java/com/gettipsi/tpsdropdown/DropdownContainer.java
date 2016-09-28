@@ -107,21 +107,24 @@ public class DropdownContainer extends FrameLayout {
     }
 
     private int getResourceId(String name) {
-        if (DropdownStylist.getInstance().getDropdownStyle() != null) {
-            int dot = name.lastIndexOf(".");
-            String resourceName = dot >= 0 ? name.substring(0, dot) : name;
-            return getContext().getResources().getIdentifier(resourceName, "drawable",
-                    getContext().getPackageName());
-        }
-        return 0;
+        int dot = name.lastIndexOf(".");
+        String resourceName = dot >= 0 ? name.substring(0, dot) : name;
+        return getContext().getResources().getIdentifier(resourceName, "drawable",
+                getContext().getPackageName());
     }
 
     private GradientDrawable getBackground(Style dropdownStyle) {
         GradientDrawable gradientDrawable = new GradientDrawable();
-        gradientDrawable.setColor(Color.parseColor(dropdownStyle.getBackgroundColor().replace("0x", "#")));
-        gradientDrawable.setStroke(dropdownStyle.getBorderWidth(),
-                Color.parseColor(dropdownStyle.getBorderColor().replace("0x", "#")));
-        gradientDrawable.setCornerRadius(dropdownStyle.getCornerRadius());
+        if (dropdownStyle.getBackgroundColor() != null) {
+            gradientDrawable.setColor(Color.parseColor(dropdownStyle.getBackgroundColor().replace("0x", "#")));
+        }
+        if (dropdownStyle.getBorderWidth() > 0 && dropdownStyle.getBorderColor() != null) {
+            gradientDrawable.setStroke(dropdownStyle.getBorderWidth(),
+                    Color.parseColor(dropdownStyle.getBorderColor().replace("0x", "#")));
+        }
+        if (dropdownStyle.getCornerRadius() > 0) {
+            gradientDrawable.setCornerRadius(dropdownStyle.getCornerRadius());
+        }
         return gradientDrawable;
     }
 }

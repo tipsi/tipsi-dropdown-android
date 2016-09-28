@@ -70,15 +70,21 @@ public class Adapter<T> extends ArrayAdapter<T> {
         }
 
         public void applyStyle(Style dropdownStyle) {
-            text.setTextColor(Color.parseColor(dropdownStyle.getTextColor().replace("0x", "#")));
-            text.setTextSize(TypedValue.COMPLEX_UNIT_SP, dropdownStyle.getFontSize());
             text.setGravity(dropdownStyle.getGravity());
-            divider.setBackgroundColor(Color.parseColor(dropdownStyle.getSeparatorColor().replace("0x", "#")));
-            ViewGroup.LayoutParams params = divider.getLayoutParams();
-            params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                    dropdownStyle.getSeparatorHeight(),
-                    getContext().getResources().getDisplayMetrics());
-            divider.setLayoutParams(params);
+            if (dropdownStyle.getTextColor() != null) {
+                text.setTextColor(Color.parseColor(dropdownStyle.getTextColor().replace("0x", "#")));
+            }
+            if (dropdownStyle.getFontSize() > 0) {
+                text.setTextSize(TypedValue.COMPLEX_UNIT_SP, dropdownStyle.getFontSize());
+            }
+            if (dropdownStyle.getSeparatorColor() != null && dropdownStyle.getSeparatorHeight() > 0) {
+                divider.setBackgroundColor(Color.parseColor(dropdownStyle.getSeparatorColor().replace("0x", "#")));
+                ViewGroup.LayoutParams params = divider.getLayoutParams();
+                params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                        dropdownStyle.getSeparatorHeight(),
+                        getContext().getResources().getDisplayMetrics());
+                divider.setLayoutParams(params);
+            }
         }
     }
 }
