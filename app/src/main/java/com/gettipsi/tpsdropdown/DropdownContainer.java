@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.gettipsi.tpsdropdown.model.DropdownStyle;
 import com.gettipsi.tpsdropdown.model.Style;
 
 import java.lang.ref.WeakReference;
@@ -56,12 +57,13 @@ public class DropdownContainer extends FrameLayout {
     @Override
     public void invalidate() {
         super.invalidate();
-        if (DropdownStylist.getInstance().getDropdownStyle() != null) {
-            setBackground(getBackground(DropdownStylist.getInstance().getDropdownStyle()));
+        DropdownStyle dropdownStyle = DropdownStylist.getInstance().getDropdownStyle();
+        if (dropdownStyle != null && dropdownStyle.getStyle() != null) {
+            setBackground(getBackground(DropdownStylist.getInstance().getStyle()));
             if (dropdown != null) {
                 dropdown.setBackgroundColor(Color.TRANSPARENT);
                 ((ImageView) findViewById(R.id.dropdownIcon)).setImageResource(
-                        getResourceId(DropdownStylist.getInstance().getDropdownStyle().getIndicatorImageName()));
+                        getResourceId(DropdownStylist.getInstance().getStyle().getIndicatorImageName()));
             }
         }
     }

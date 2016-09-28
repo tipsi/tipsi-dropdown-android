@@ -6,7 +6,7 @@ import android.support.test.espresso.ViewAction;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.gettipsi.tpsdropdown.Dropdown;
+import com.gettipsi.tpsdropdown.DropdownContainer;
 
 import org.hamcrest.Matcher;
 
@@ -24,7 +24,7 @@ public class SetupElementsAction implements ViewAction {
 
     @Override
     public Matcher<View> getConstraints() {
-        return isAssignableFrom(Dropdown.class);
+        return isAssignableFrom(DropdownContainer.class);
     }
 
     @Override
@@ -35,6 +35,6 @@ public class SetupElementsAction implements ViewAction {
     @Override
     public void perform(UiController uiController, View view) {
         ((Activity)view.getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-        ((Dropdown) view).setupWithElements(items);
+        ((DropdownContainer) view).setupWithElements(items);
     }
 }

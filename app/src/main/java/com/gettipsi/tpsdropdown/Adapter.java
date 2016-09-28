@@ -23,7 +23,7 @@ public class Adapter<T> extends ArrayAdapter<T> {
 
     @Override
     public void notifyDataSetChanged() {
-        dropdownStyle = DropdownStylist.getInstance().getDropdownStyle();
+        dropdownStyle = DropdownStylist.getInstance().getStyle();
         super.notifyDataSetChanged();
     }
 

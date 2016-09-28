@@ -32,7 +32,11 @@ public class DropdownStylist {
         dropdownStyle = gson.fromJson(style, new TypeToken<DropdownStyle>() {}.getType());
     }
 
-    public Style getDropdownStyle() {
+    public DropdownStyle getDropdownStyle() {
+        return dropdownStyle;
+    }
+
+    public Style getStyle() {
         return dropdownStyle.getStyle();
     }
 }
