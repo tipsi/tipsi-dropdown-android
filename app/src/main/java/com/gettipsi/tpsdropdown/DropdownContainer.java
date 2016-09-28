@@ -1,11 +1,15 @@
 package com.gettipsi.tpsdropdown;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
+import com.gettipsi.tpsdropdown.model.Style;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -13,7 +17,6 @@ import java.util.List;
 public class DropdownContainer extends FrameLayout {
 
     private Dropdown dropdown;
-    private DropdownStylist dropdownStylist;
     private WeakReference<Adapter> adapter;
 
     public DropdownContainer(Context context) {
@@ -31,23 +34,36 @@ public class DropdownContainer extends FrameLayout {
         initDropdown();
     }
 
+    public Dropdown getDropdown() {
+        return dropdown;
+    }
+
     public <T> void setupWithElements(List<T> values) {
         adapter = new WeakReference<Adapter>(new Adapter<>(getContext(), android.R.layout.simple_spinner_item, values));
         adapter.get().setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dropdownStylist.setAdapter(adapter.get());
-        dropdownStylist.applyStyle();
         setAdapter();
-    }
-
-    public void setStyle(String style) {
-        dropdownStylist.setAdapter(adapter != null ? adapter.get() : null);
-        dropdownStylist.setStyle(style);
-        dropdownStylist.applyStyle();
         invalidate();
     }
 
-    public Dropdown getDropdown() {
-        return dropdown;
+    public void setStyle(String style) {
+        DropdownStylist.getInstance().parseStyle(style);
+        if (adapter.get() != null) {
+            adapter.get().notifyDataSetChanged();
+        }
+        invalidate();
+    }
+
+    @Override
+    public void invalidate() {
+        super.invalidate();
+        if (DropdownStylist.getInstance().getDropdownStyle() != null) {
+            setBackground(getBackground(DropdownStylist.getInstance().getDropdownStyle()));
+            if (dropdown != null) {
+                dropdown.setBackgroundColor(Color.TRANSPARENT);
+                ((ImageView) findViewById(R.id.dropdownIcon)).setImageResource(
+                        getResourceId(DropdownStylist.getInstance().getDropdownStyle().getIndicatorImageName()));
+            }
+        }
     }
 
     private void initDropdown() {
@@ -56,7 +72,6 @@ public class DropdownContainer extends FrameLayout {
                 ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.START);
         dropdown.setId(R.id.dropdownId);
         dropdown.setLayoutParams(params);
-        dropdownStylist = new DropdownStylist(null, this);
         addView(dropdown);
         addView(getIconView());
     }
@@ -87,5 +102,24 @@ public class DropdownContainer extends FrameLayout {
                 getDropdown().setSelection(0);
             }
         });
+    }
+
+    private int getResourceId(String name) {
+        if (DropdownStylist.getInstance().getDropdownStyle() != null) {
+            int dot = name.lastIndexOf(".");
+            String resourceName = dot >= 0 ? name.substring(0, dot) : name;
+            return getContext().getResources().getIdentifier(resourceName, "drawable",
+                    getContext().getPackageName());
+        }
+        return 0;
+    }
+
+    private GradientDrawable getBackground(Style dropdownStyle) {
+        GradientDrawable gradientDrawable = new GradientDrawable();
+        gradientDrawable.setColor(Color.parseColor(dropdownStyle.getBackgroundColor().replace("0x", "#")));
+        gradientDrawable.setStroke(dropdownStyle.getBorderWidth(),
+                Color.parseColor(dropdownStyle.getBorderColor().replace("0x", "#")));
+        gradientDrawable.setCornerRadius(dropdownStyle.getCornerRadius());
+        return gradientDrawable;
     }
 }

@@ -1,79 +1,38 @@
 package com.gettipsi.tpsdropdown;
 
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
-import android.widget.ImageView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.ref.WeakReference;
+import com.gettipsi.tpsdropdown.model.DropdownStyle;
+import com.gettipsi.tpsdropdown.model.Style;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 public class DropdownStylist {
 
-    private WeakReference<Adapter> adapter;
-    private WeakReference<DropdownContainer> dropdown;
+    private static volatile DropdownStylist instance;
+    private static final Object LOCK = new Object();
+
     private DropdownStyle dropdownStyle = null;
 
-    public DropdownStylist(Adapter adapter, DropdownContainer dropdown) {
-        this.adapter = new WeakReference<>(adapter);
-        this.dropdown = new WeakReference<>(dropdown);
+    private DropdownStylist() {
     }
 
-    public void setAdapter(Adapter adapter) {
-        this.adapter = new WeakReference<>(adapter);
-    }
-
-    public void setStyle(String style) {
-        try {
-            JSONObject object = new JSONObject(style);
-            if (object.has("style")) {
-                dropdownStyle = DropdownStyle.fromJson(object.getJSONObject("style"));
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        applyStyle();
-    }
-
-    public void applyStyle() {
-        if (dropdownStyle != null) {
-            if (adapter.get() != null) {
-                adapter.get().setDropdownStyle(dropdownStyle);
-            }
-
-            if (dropdown.get() != null) {
-                DropdownContainer container = dropdown.get();
-                container.setBackground(getBackground(dropdownStyle));
-                if (dropdownStyle.getIndicatorImageName() != null) {
-                    container.getDropdown().setBackgroundColor(Color.TRANSPARENT);
-                    ((ImageView) container.findViewById(R.id.dropdownIcon))
-                            .setImageResource(getResourceId(dropdownStyle.getIndicatorImageName()));
+    public static DropdownStylist getInstance() {
+        if (instance == null ) {
+            synchronized (LOCK) {
+                if (instance == null) {
+                    instance = new DropdownStylist();
                 }
             }
         }
+        return instance;
     }
 
-    private int getResourceId(String name) {
-        if (dropdown.get() != null) {
-            int dot = name.lastIndexOf(".");
-            String resourceName = dot >= 0 ? name.substring(0, dot) : name;
-            Context context = dropdown.get().getContext();
-            int id = context.getResources().getIdentifier(resourceName, "drawable",
-                    context.getPackageName());
-            return id;
-        }
-        return 0;
+    public void parseStyle(String style) {
+        Gson gson = new GsonBuilder().create();
+        dropdownStyle = gson.fromJson(style, new TypeToken<DropdownStyle>() {}.getType());
     }
 
-    private GradientDrawable getBackground(DropdownStyle dropdownStyle) {
-        GradientDrawable gradientDrawable = new GradientDrawable();
-        gradientDrawable.setColor(Color.parseColor(dropdownStyle.getBackgroundColor().replace("0x", "#")));
-        gradientDrawable.setStroke(dropdownStyle.getBorderWidth(),
-                Color.parseColor(dropdownStyle.getBorderColor().replace("0x", "#")));
-        gradientDrawable.setCornerRadius(dropdownStyle.getCornerRadius());
-        return gradientDrawable;
+    public Style getDropdownStyle() {
+        return dropdownStyle.getStyle();
     }
-
 }
