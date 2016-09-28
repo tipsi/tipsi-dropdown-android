@@ -3,4 +3,6 @@
     <item name="dropdown" type="id" />
     <item name="dropdownId" type="id" />
     <item name="dropdownTextItemId" type="id" />
+    <item name="divider" type="id" />
+    <item name="dropdownIcon" type="id" />
 </resources>
