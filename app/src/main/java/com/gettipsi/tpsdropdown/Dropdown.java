@@ -7,11 +7,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.SpinnerAdapter;
 
-import java.util.List;
-
 public class Dropdown extends AppCompatSpinner {
 
-    private Context context;
     private boolean firstEventFired = false;
     private int selectedIndex = 0;
     private int selected = 0;
@@ -19,7 +16,6 @@ public class Dropdown extends AppCompatSpinner {
 
     public Dropdown(Context context) {
         super(context, 0);
-        this.context = context;
         setOnItemSelectedListener(ON_ITEM_SELECTED_LISTENER);
     }
 
@@ -37,19 +33,6 @@ public class Dropdown extends AppCompatSpinner {
 
     public void setDropdownUpdateEvent(DropdownUpdateEvent dropdownUpdateEvent) {
         this.dropdownUpdateEvent = dropdownUpdateEvent;
-    }
-
-    public void setupWithElements(List<Object> values) {
-        final Adapter spinnerArrayAdapter = new Adapter(context,
-                android.R.layout.simple_spinner_item, values);
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        post(new Runnable() {
-            @Override
-            public void run() {
-                setAdapter(spinnerArrayAdapter);
-                setSelection(selectedIndex);
-            }
-        });
     }
 
     public void selectElementWithName(String name) {
