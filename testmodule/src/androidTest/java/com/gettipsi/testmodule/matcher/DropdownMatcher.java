@@ -1,7 +1,8 @@
 package com.gettipsi.testmodule.matcher;
 
 import android.view.View;
-import android.widget.AdapterView;
+
+import com.gettipsi.tpsdropdown.DropdownContainer;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -15,7 +16,7 @@ public class DropdownMatcher {
 
             @Override
             public boolean matchesSafely(final View view) {
-                length = ((AdapterView) view).getAdapter().getCount();
+                length = ((DropdownContainer) view).getDropdown().getAdapter().getCount();
                 return length == size;
             }
 

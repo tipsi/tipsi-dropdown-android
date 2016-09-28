@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.SpinnerAdapter;
 
-import java.util.List;
-
 public class Dropdown extends AppCompatSpinner {
 
     private boolean firstEventFired = false;
@@ -35,19 +33,6 @@ public class Dropdown extends AppCompatSpinner {
 
     public void setDropdownUpdateEvent(DropdownUpdateEvent dropdownUpdateEvent) {
         this.dropdownUpdateEvent = dropdownUpdateEvent;
-    }
-
-    public <T> void setupWithElements(List<T> values) {
-        final Adapter spinnerArrayAdapter = new Adapter<T>(getContext(),
-                android.R.layout.simple_spinner_item, values);
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        post(new Runnable() {
-            @Override
-            public void run() {
-                setAdapter(spinnerArrayAdapter);
-                setSelection(selectedIndex);
-            }
-        });
     }
 
     public void selectElementWithName(String name) {
