@@ -7,6 +7,7 @@ import android.test.suitebuilder.annotation.LargeTest;
 
 import com.gettipsi.testmodule.action.SelectElementWithNameAction;
 import com.gettipsi.testmodule.action.SetSelectedAction;
+import com.gettipsi.testmodule.action.SetStyleAction;
 import com.gettipsi.testmodule.action.SetupElementsAction;
 import com.gettipsi.testmodule.matcher.DropdownMatcher;
 
@@ -36,6 +37,21 @@ import static org.hamcrest.Matchers.is;
 public class DropdownTests {
 
     private List<Object> items;
+    private static final String STYLE = "{" +
+            "\"style\":" +
+            "    {\"backgroundColor\":\"0x0000FF\"," +
+            "    \"borderWidth\":2," +
+            "    \"borderColor\":\"0xFFFFFF\"," +
+            "    \"cornerRadius\":10," +
+            "    \"separatorHeight\":1," +
+            "    \"separatorColor\":\"0xAAAAAA\"," +
+            "    \"fontName\":\"Arial\"," +
+            "    \"fontSize\":15," +
+            "    \"textColor\":\"0xCCCCCC\"," +
+            "    \"textAlignment\":\"Left\"," +
+            "    \"indicatorImageName\":\"custom_triangle.png\"" +
+            "    }" +
+            "}";
 
     @Rule
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);
@@ -122,9 +138,13 @@ public class DropdownTests {
     }
 
     private void setupItems() {
-        onView(withId(R.id.dropdownId))
+
+        onView(withId(R.id.dropdown))
                 .perform(new SetupElementsAction(items))
                 .check(ViewAssertions.matches(DropdownMatcher.withListSize(items.size())));
+
+        onView(withId(R.id.dropdown))
+                .perform(new SetStyleAction(STYLE));
     }
 
 }
