@@ -48,7 +48,7 @@ public class DropdownContainer extends FrameLayout {
 
     public void setStyle(String style) {
         DropdownStylist.getInstance().parseStyle(style);
-        if (adapter.get() != null) {
+        if (adapter != null && adapter.get() != null) {
             adapter.get().notifyDataSetChanged();
         }
         invalidate();
@@ -71,7 +71,7 @@ public class DropdownContainer extends FrameLayout {
     private void initDropdown() {
         dropdown = new Dropdown(getContext());
         ViewGroup.LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.START);
+                ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL);
         dropdown.setId(R.id.dropdownId);
         dropdown.setLayoutParams(params);
         addView(dropdown);
