@@ -137,8 +137,17 @@ public class DropdownTests {
         onView(withId(R.id.dropdownId)).check(matches(withSpinnerText(containsString(item3))));
     }
 
-    private void setupItems() {
+    @Test
+    public void checkSetupStyleBeforeAdapter() {
+        onView(withId(R.id.dropdown))
+                .perform(new SetStyleAction(STYLE));
 
+        onView(withId(R.id.dropdown))
+                .perform(new SetupElementsAction(items))
+                .check(ViewAssertions.matches(DropdownMatcher.withListSize(items.size())));
+    }
+
+    private void setupItems() {
         onView(withId(R.id.dropdown))
                 .perform(new SetupElementsAction(items))
                 .check(ViewAssertions.matches(DropdownMatcher.withListSize(items.size())));
