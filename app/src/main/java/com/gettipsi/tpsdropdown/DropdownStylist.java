@@ -1,5 +1,7 @@
 package com.gettipsi.tpsdropdown;
 
+import android.util.Log;
+
 import com.gettipsi.tpsdropdown.model.DropdownStyle;
 import com.gettipsi.tpsdropdown.model.Style;
 import com.google.gson.Gson;
@@ -28,8 +30,18 @@ public class DropdownStylist {
     }
 
     public void parseStyle(String style) {
-        Gson gson = new GsonBuilder().create();
-        dropdownStyle = gson.fromJson(style, new TypeToken<DropdownStyle>() {}.getType());
+        try {
+            Gson gson = new GsonBuilder().create();
+            dropdownStyle = gson.fromJson(style, new TypeToken<DropdownStyle>() {
+            }.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("Error", "JSON parsing exception");
+        }
+    }
+
+    public boolean isStyled() {
+        return getDropdownStyle() != null && getDropdownStyle().getStyle() != null;
     }
 
     public DropdownStyle getDropdownStyle() {

@@ -84,6 +84,50 @@ public class Style {
         return indicatorImageName;
     }
 
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public void setBorderWidth(int borderWidth) {
+        this.borderWidth = borderWidth;
+    }
+
+    public void setBorderColor(String borderColor) {
+        this.borderColor = borderColor;
+    }
+
+    public void setCornerRadius(int cornerRadius) {
+        this.cornerRadius = cornerRadius;
+    }
+
+    public void setSeparatorHeight(int separatorHeight) {
+        this.separatorHeight = separatorHeight;
+    }
+
+    public void setSeparatorColor(String separatorColor) {
+        this.separatorColor = separatorColor;
+    }
+
+    public void setFontName(String fontName) {
+        this.fontName = fontName;
+    }
+
+    public void setFontSize(int fontSize) {
+        this.fontSize = fontSize;
+    }
+
+    public void setTextColor(String textColor) {
+        this.textColor = textColor;
+    }
+
+    public void setTextAlignment(String textAlignment) {
+        this.textAlignment = textAlignment;
+    }
+
+    public void setIndicatorImageName(String indicatorImageName) {
+        this.indicatorImageName = indicatorImageName;
+    }
+
     public int getGravity() {
 
         if (textAlignment != null) {
