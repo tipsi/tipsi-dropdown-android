@@ -53,8 +53,8 @@ public class DropdownContainer extends FrameLayout {
         invalidate();
     }
 
-    public void setStyle(String style) {
-        DropdownStylist.getInstance().parseStyle(style);
+    public void setStyle(Style style) {
+        DropdownStylist.getInstance().setStyle(style);
         if (adapter != null && adapter.get() != null) {
             adapter.get().notifyDataSetChanged();
         }
@@ -65,12 +65,20 @@ public class DropdownContainer extends FrameLayout {
     public void invalidate() {
         super.invalidate();
         if (DropdownStylist.getInstance().isStyled()) {
-            setBackground(getBackground(DropdownStylist.getInstance().getStyle()));
+            Style style = DropdownStylist.getInstance().getStyle();
+            setBackground(getBackground(style));
             if (dropdown != null) {
-                String indicatorImageName = DropdownStylist.getInstance().getStyle().getIndicatorImageName();
-                dropdown.setBackgroundColor(Color.TRANSPARENT);
-                if (icon != null && icon.get() != null && indicatorImageName != null && !indicatorImageName.isEmpty()) {
-                    icon.get().setImageResource(getResourceId(indicatorImageName));
+                int indicatorImageResId = style.getIndicatorImageResId();
+                String indicatorImageName = style.getIndicatorImageName();
+                if (indicatorImageResId > 0 || indicatorImageName != null) {
+                    dropdown.setBackgroundColor(Color.TRANSPARENT);
+                    if (icon != null && icon.get() != null) {
+                        if (indicatorImageResId > 0) {
+                            icon.get().setImageResource(indicatorImageResId);
+                        } else if (indicatorImageName != null && !indicatorImageName.isEmpty()) {
+                            icon.get().setImageResource(getResourceId(indicatorImageName));
+                        }
+                    }
                 }
             }
         }

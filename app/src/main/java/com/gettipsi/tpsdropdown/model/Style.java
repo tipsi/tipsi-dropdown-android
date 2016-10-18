@@ -2,43 +2,20 @@ package com.gettipsi.tpsdropdown.model;
 
 import android.view.Gravity;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 public class Style {
-    @SerializedName("backgroundColor")
-    @Expose
     private String backgroundColor;
-    @SerializedName("borderWidth")
-    @Expose
     private int borderWidth;
-    @SerializedName("borderColor")
-    @Expose
     private String borderColor;
-    @SerializedName("cornerRadius")
-    @Expose
     private int cornerRadius;
-    @SerializedName("separatorHeight")
-    @Expose
     private int separatorHeight;
-    @SerializedName("separatorColor")
-    @Expose
     private String separatorColor;
-    @SerializedName("fontName")
-    @Expose
     private String fontName;
-    @SerializedName("fontSize")
-    @Expose
     private int fontSize;
-    @SerializedName("textColor")
-    @Expose
     private String textColor;
-    @SerializedName("textAlignment")
-    @Expose
     private String textAlignment;
-    @SerializedName("indicatorImageName")
-    @Expose
     private String indicatorImageName;
+
+    private int indicatorImageResId;
 
     public String getBackgroundColor() {
         return backgroundColor;
@@ -128,6 +105,14 @@ public class Style {
         this.indicatorImageName = indicatorImageName;
     }
 
+    public int getIndicatorImageResId() {
+        return indicatorImageResId;
+    }
+
+    public void setIndicatorImageResId(int indicatorImageResId) {
+        this.indicatorImageResId = indicatorImageResId;
+    }
+
     public int getGravity() {
 
         if (textAlignment != null) {
@@ -139,5 +124,97 @@ public class Style {
         }
 
         return Gravity.START | Gravity.CENTER_VERTICAL;
+    }
+
+    public static final class Builder {
+        private String backgroundColor;
+        private int borderWidth;
+        private String borderColor;
+        private int cornerRadius;
+        private int separatorHeight;
+        private String separatorColor;
+        private String fontName;
+        private int fontSize;
+        private String textColor;
+        private String textAlignment;
+        private String indicatorImageName;
+        private int indicatorImageResId;
+
+        public Builder withBackgroundColor(String backgroundColor) {
+            this.backgroundColor = backgroundColor;
+            return this;
+        }
+
+        public Builder withBorderWidth(int borderWidth) {
+            this.borderWidth = borderWidth;
+            return this;
+        }
+
+        public Builder withBorderColor(String borderColor) {
+            this.borderColor = borderColor;
+            return this;
+        }
+
+        public Builder withCornerRadius(int cornerRadius) {
+            this.cornerRadius = cornerRadius;
+            return this;
+        }
+
+        public Builder withSeparatorHeight(int separatorHeight) {
+            this.separatorHeight = separatorHeight;
+            return this;
+        }
+
+        public Builder withSeparatorColor(String separatorColor) {
+            this.separatorColor = separatorColor;
+            return this;
+        }
+
+        public Builder withFontName(String fontName) {
+            this.fontName = fontName;
+            return this;
+        }
+
+        public Builder withFontSize(int fontSize) {
+            this.fontSize = fontSize;
+            return this;
+        }
+
+        public Builder withTextColor(String textColor) {
+            this.textColor = textColor;
+            return this;
+        }
+
+        public Builder withTextAlignment(String textAlignment) {
+            this.textAlignment = textAlignment;
+            return this;
+        }
+
+        public Builder withIndicatorImageName(String indicatorImageName) {
+            this.indicatorImageName = indicatorImageName;
+            return this;
+        }
+
+        public Builder withIndicatorImageResId(int indicatorImageName) {
+            this.indicatorImageResId = indicatorImageName;
+            return this;
+        }
+
+        public Style build() {
+            Style style = new Style();
+            style.setBackgroundColor(backgroundColor);
+            style.setBorderWidth(borderWidth);
+            style.setBorderColor(borderColor);
+            style.setCornerRadius(cornerRadius);
+            style.setSeparatorHeight(separatorHeight);
+            style.setSeparatorColor(separatorColor);
+            style.setFontName(fontName);
+            style.setFontSize(fontSize);
+            style.setTextColor(textColor);
+            style.setTextAlignment(textAlignment);
+            style.setIndicatorImageName(indicatorImageName);
+            style.setIndicatorImageResId(indicatorImageResId);
+            return style;
+        }
     }
 }
