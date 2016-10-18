@@ -50,7 +50,19 @@ Adding dropdown into layout:
 
 Applying style to dropdown
 ```java
-  ((DropdownContainer) findViewById(R.id.dropdown)).setStyle(style);
+((DropdownContainer) findViewById(R.id.dropdown)).setStyle(style);
+```
+
+You can also extend default class Adapter and set it with
+
+```java
+((DropdownContainer) findViewById(R.id.dropdown)).setupWithAdapter(customAdapter);
+```
+
+or init with list of elements
+```java
+List<String> items = Arrays.asList("One", "Two", "Three", "Four");
+((DropdownContainer) findViewById(R.id.dropdown)).setupWithAdapter(items);
 ```
 
 ## Author
