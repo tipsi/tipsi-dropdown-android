@@ -6,14 +6,15 @@ import android.support.test.espresso.matcher.ViewMatchers;
 import android.view.View;
 
 import com.gettipsi.tpsdropdown.DropdownContainer;
+import com.gettipsi.tpsdropdown.model.Style;
 
 import org.hamcrest.Matcher;
 
 public class SetStyleAction implements ViewAction {
 
-    private String style;
+    private Style style;
 
-    public SetStyleAction(String style) {
+    public SetStyleAction(Style style) {
         this.style = style;
     }
 

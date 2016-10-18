@@ -1,25 +1,27 @@
 package com.gettipsi.tpsdropdown;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.gettipsi.tpsdropdown.model.Style;
 
 import java.util.List;
 
-public class Adapter<T> extends ArrayAdapter<T> {
+public abstract class Adapter<T> extends BaseAdapter {
 
     private Style dropdownStyle;
+    private List<T> objects;
 
-    public Adapter(Context context, int resource, List<T> objects) {
-        super(context, resource, objects);
+    public Adapter(List<T> objects) {
+        this.objects = objects;
     }
+
+    public abstract String getLabel(int position);
 
     @Override
     public void notifyDataSetChanged() {
@@ -37,6 +39,21 @@ public class Adapter<T> extends ArrayAdapter<T> {
         return getItemView(position, convertView, parent, true);
     }
 
+    @Override
+    public int getCount() {
+        return objects == null ? 0 : objects.size();
+    }
+
+    @Override
+    public T getItem(int i) {
+        return objects != null ? objects.get(i) : null;
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
     private View getItemView(int position, View convertView, ViewGroup parent, boolean showDivider) {
         View view = createView(R.layout.dropdown_line_item, convertView, parent);
         invalidateItem(position, (ViewHolderItem) view.getTag(), showDivider);
@@ -47,13 +64,14 @@ public class Adapter<T> extends ArrayAdapter<T> {
         if (dropdownStyle != null) {
             viewHolder.applyStyle(dropdownStyle);
         }
-        viewHolder.divider.setVisibility(showDivider ? View.VISIBLE : View.GONE);
-        viewHolder.text.setText(getItem(position).toString());
+        viewHolder.divider.setVisibility(showDivider && getCount() - 1 != position ? View.VISIBLE : View.GONE);
+        String label = getLabel(position);
+        viewHolder.text.setText(label == null ? "" : label);
     }
 
     private View createView(int resourceId, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
+            convertView = LayoutInflater.from(parent.getContext()).inflate(resourceId, parent, false);
             ViewHolderItem holder = new ViewHolderItem(convertView);
             convertView.setTag(holder);
         }
@@ -82,7 +100,7 @@ public class Adapter<T> extends ArrayAdapter<T> {
                 ViewGroup.LayoutParams params = divider.getLayoutParams();
                 params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                         dropdownStyle.getSeparatorHeight(),
-                        getContext().getResources().getDisplayMetrics());
+                        text.getContext().getResources().getDisplayMetrics());
                 divider.setLayoutParams(params);
             }
         }

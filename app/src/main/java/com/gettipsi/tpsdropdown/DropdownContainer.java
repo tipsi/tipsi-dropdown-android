@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.gettipsi.tpsdropdown.model.DropdownStyle;
 import com.gettipsi.tpsdropdown.model.Style;
 
 import java.lang.ref.WeakReference;
@@ -19,6 +18,7 @@ public class DropdownContainer extends FrameLayout {
 
     private Dropdown dropdown;
     private WeakReference<Adapter> adapter;
+    private WeakReference<ImageView> icon;
 
     public DropdownContainer(Context context) {
         super(context);
@@ -39,15 +39,22 @@ public class DropdownContainer extends FrameLayout {
         return dropdown;
     }
 
+    public ImageView getIcon() {
+        return icon != null ? icon.get() : null;
+    }
+
     public <T> void setupWithElements(List<T> values) {
-        adapter = new WeakReference<Adapter>(new Adapter<>(getContext(), android.R.layout.simple_spinner_item, values));
-        adapter.get().setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        setupWithAdapter(new TipsiAdapter(values));
+    }
+
+    public void setupWithAdapter(Adapter adapter) {
+        this.adapter = new WeakReference<>(adapter);
         setAdapter();
         invalidate();
     }
 
-    public void setStyle(String style) {
-        DropdownStylist.getInstance().parseStyle(style);
+    public void setStyle(Style style) {
+        DropdownStylist.getInstance().setStyle(style);
         if (adapter != null && adapter.get() != null) {
             adapter.get().notifyDataSetChanged();
         }
@@ -57,13 +64,22 @@ public class DropdownContainer extends FrameLayout {
     @Override
     public void invalidate() {
         super.invalidate();
-        DropdownStyle dropdownStyle = DropdownStylist.getInstance().getDropdownStyle();
-        if (dropdownStyle != null && dropdownStyle.getStyle() != null) {
-            setBackground(getBackground(DropdownStylist.getInstance().getStyle()));
+        if (DropdownStylist.getInstance().isStyled()) {
+            Style style = DropdownStylist.getInstance().getStyle();
+            setBackground(getBackground(style));
             if (dropdown != null) {
-                dropdown.setBackgroundColor(Color.TRANSPARENT);
-                ((ImageView) findViewById(R.id.dropdownIcon)).setImageResource(
-                        getResourceId(DropdownStylist.getInstance().getStyle().getIndicatorImageName()));
+                int indicatorImageResId = style.getIndicatorImageResId();
+                String indicatorImageName = style.getIndicatorImageName();
+                if (indicatorImageResId > 0 || indicatorImageName != null) {
+                    dropdown.setBackgroundColor(Color.TRANSPARENT);
+                    if (icon != null && icon.get() != null) {
+                        if (indicatorImageResId > 0) {
+                            icon.get().setImageResource(indicatorImageResId);
+                        } else if (indicatorImageName != null && !indicatorImageName.isEmpty()) {
+                            icon.get().setImageResource(getResourceId(indicatorImageName));
+                        }
+                    }
+                }
             }
         }
     }
@@ -88,6 +104,7 @@ public class DropdownContainer extends FrameLayout {
                 0, getResources().getDimensionPixelSize(R.dimen.item_padding));
         icon.setLayoutParams(params);
         icon.setClickable(false);
+        this.icon = new WeakReference<>(icon);
         return icon;
     }
 

@@ -1,5 +1,6 @@
 package com.gettipsi.testmodule;
 
+import android.os.SystemClock;
 import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -10,6 +11,8 @@ import com.gettipsi.testmodule.action.SetSelectedAction;
 import com.gettipsi.testmodule.action.SetStyleAction;
 import com.gettipsi.testmodule.action.SetupElementsAction;
 import com.gettipsi.testmodule.matcher.DropdownMatcher;
+import com.gettipsi.tpsdropdown.DropdownStylist;
+import com.gettipsi.tpsdropdown.model.Style;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -37,21 +40,7 @@ import static org.hamcrest.Matchers.is;
 public class DropdownTests {
 
     private List<Object> items;
-    private static final String STYLE = "{" +
-            "\"style\":" +
-            "    {\"backgroundColor\":\"0x0000FF\"," +
-            "    \"borderWidth\":2," +
-            "    \"borderColor\":\"0xFFFFFF\"," +
-            "    \"cornerRadius\":10," +
-            "    \"separatorHeight\":1," +
-            "    \"separatorColor\":\"0xAAAAAA\"," +
-            "    \"fontName\":\"Arial\"," +
-            "    \"fontSize\":15," +
-            "    \"textColor\":\"0xCCCCCC\"," +
-            "    \"textAlignment\":\"Left\"," +
-            "    \"indicatorImageName\":\"custom_triangle.png\"" +
-            "    }" +
-            "}";
+    private Style style;
 
     @Rule
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);
@@ -59,6 +48,18 @@ public class DropdownTests {
     @Before
     public void initValidData() {
         items = Arrays.<Object>asList("One", "Two", "Three", "Four");
+        style = new Style.Builder()
+                .withBackgroundColor("0x0000FF")
+                .withBorderWidth(2)
+                .withBorderColor("0xFFFFFF")
+                .withCornerRadius(10)
+                .withSeparatorHeight(1)
+                .withSeparatorColor("0xAAAAAA")
+                .withFontSize(15)
+                .withTextColor("0xCCCCCC")
+                .withTextAlignment("Left")
+                .withIndicatorImageName("custom_triangle.png")
+                .build();
     }
 
     @Test
@@ -140,11 +141,66 @@ public class DropdownTests {
     @Test
     public void checkSetupStyleBeforeAdapter() {
         onView(withId(R.id.dropdown))
-                .perform(new SetStyleAction(STYLE));
+                .perform(new SetStyleAction(style));
 
         onView(withId(R.id.dropdown))
                 .perform(new SetupElementsAction(items))
                 .check(ViewAssertions.matches(DropdownMatcher.withListSize(items.size())));
+    }
+
+    @Test
+    public void checkForSetStyleViaSetters() {
+        onView(withId(R.id.dropdown)).perform(new SetStyleAction(style));
+    }
+
+    @Test
+    public void checkIconChange() {
+        setupItems();
+        style.setIndicatorImageName("");
+        onView(withId(R.id.dropdown)).perform(new SetStyleAction(style));
+
+        style.setIndicatorImageName(null);
+        onView(withId(R.id.dropdown)).perform(new SetStyleAction(style));
+
+        style.setIndicatorImageName("custom_triangle");
+        onView(withId(R.id.dropdown)).perform(new SetStyleAction(style));
+
+        style.setIndicatorImageName("custom_triangle.png");
+        onView(withId(R.id.dropdown)).perform(new SetStyleAction(style));
+
+        style.setIndicatorImageResId(0);
+        onView(withId(R.id.dropdown)).perform(new SetStyleAction(style));
+
+        style.setIndicatorImageResId(R.drawable.custom_triangle);
+        onView(withId(R.id.dropdown)).perform(new SetStyleAction(style));
+    }
+
+    @Test
+    public void checkChangingBackground() {
+        setupItems();
+        DropdownStylist.getInstance().getStyle().setBackgroundColor("0x00FF00");
+        onView(withId(R.id.dropdown)).perform(new SetStyleAction(style));
+
+        DropdownStylist.getInstance().getStyle().setBackgroundColor("0xFF0000");
+        onView(withId(R.id.dropdown)).perform(new SetStyleAction(style));
+
+        DropdownStylist.getInstance().getStyle().setBackgroundColor("0xFF00FF");
+        onView(withId(R.id.dropdown)).perform(new SetStyleAction(style));
+
+        DropdownStylist.getInstance().getStyle().setBackgroundColor("0x00FFFF");
+        onView(withId(R.id.dropdown)).perform(new SetStyleAction(style));
+
+        DropdownStylist.getInstance().getStyle().setBackgroundColor("0xFFFFFF");
+        onView(withId(R.id.dropdown)).perform(new SetStyleAction(style));
+
+        DropdownStylist.getInstance().getStyle().setBackgroundColor("0x000000");
+        onView(withId(R.id.dropdown)).perform(new SetStyleAction(style));
+
+        DropdownStylist.getInstance().getStyle().setBackgroundColor("0xCCCCCC");
+        onView(withId(R.id.dropdown)).perform(new SetStyleAction(style));
+
+        DropdownStylist.getInstance().getStyle().setBackgroundColor("0x666666");
+        onView(withId(R.id.dropdown)).perform(new SetStyleAction(style));
     }
 
     private void setupItems() {
@@ -153,7 +209,7 @@ public class DropdownTests {
                 .check(ViewAssertions.matches(DropdownMatcher.withListSize(items.size())));
 
         onView(withId(R.id.dropdown))
-                .perform(new SetStyleAction(STYLE));
+                .perform(new SetStyleAction(style));
     }
 
 }
