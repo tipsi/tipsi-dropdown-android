@@ -3,9 +3,6 @@
 [![CI Status](https://img.shields.io/travis/tipsi/tipsi-dropdown-ios.svg?style=flat)](https://travis-ci.org/tipsi/tipsi-dropdown-android)
 [![](https://jitpack.io/v/tipsi/tipsi-dropdown-android.svg)](https://jitpack.io/#tipsi/tipsi-dropdown-android)
 
-## Example
-To run the example project, clone the repo, and run `npm install` from the Example directory first.
-
 ## Usage
 Add it in your root build.gradle at the end of repositories:
 ```ruby
