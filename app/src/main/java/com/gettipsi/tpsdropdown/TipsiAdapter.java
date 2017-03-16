@@ -1,5 +1,6 @@
 package com.gettipsi.tpsdropdown;
 
+import com.gettipsi.tpsdropdown.Adapter;
 import java.util.List;
 
 public class TipsiAdapter<T> extends Adapter<T> {
